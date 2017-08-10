@@ -1,0 +1,37 @@
+{
+  "queries": {
+    "currentQuery": {
+      "name": "spRptEmpMonthSummary",
+      "query": "mutation ($ccc: String, $taxYr: Int, $taxMth: Int) {\n  spRptEmpMonthSummary(input: {iCubitCompanyCode: $ccc, iTaxYear: $taxYr, iTaxMonth: $taxMth}) {\n    tyRptEmpMonthSummaries {\n      name\n      employeeId\n      employeeCode\n      payBank\n    }\n  }\n}\n",
+      "variables": "{\n  \"ccc\" : \"aaab\",\n  \"taxYr\" : 2018,\n  \"taxMth\" : 3\n}"
+    },
+    "queries": [
+      {
+        "name": "spRptEmpMonthSummary",
+        "query": "mutation ($ccc: String, $taxYr: Int, $taxMth: Int) {\n  spRptEmpMonthSummary(input: {iCubitCompanyCode: $ccc, iTaxYear: $taxYr, iTaxMonth: $taxMth}) {\n    tyRptEmpMonthSummaries {\n      name\n      employeeId\n      employeeCode\n      payBank\n    }\n  }\n}\n",
+        "variables": "{\n  \"ccc\" : \"aaab\",\n  \"taxYr\" : 2018,\n  \"taxMth\" : 3\n}"
+      }
+    ]
+  },
+  "settings": {
+    "currentServer": {
+      "method": "POST",
+      "url": "http://localhost:3000/api/pgg/graphql",
+      "headers": {},
+      "cookies": {},
+      "authorization": true
+    },
+    "servers": {
+      "http://localhost:3000/api/pgg/graphql": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/pgg/graphql",
+        "headers": {},
+        "cookies": {},
+        "authorization": true
+      }
+    }
+  },
+  "navstate": {
+    "leftPanelOpen": false
+  }
+}

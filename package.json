@@ -1,0 +1,91 @@
+{
+  "name": "linkupCubitSagePortal",
+  "version": "0.1.0",
+  "description": "Minimal set of code to write a GraphQL server with Apollo graphql-tools",
+  "scripts": {
+    "start": "npm run server",
+    "server": "nodemon ./server.js --exec babel-node",
+    "client": "client/fleet-app/start.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apollostack/apollo-starter-kit.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Javascript",
+    "GraphQL",
+    "Express",
+    "Apollo",
+    "Meteor"
+  ],
+  "author": "Jonas Helfer <jonas@helfer.email>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apollostack/apollo-starter-kit/issues"
+  },
+  "homepage": "https://github.com/apollostack/apollo-starter-kit#readme",
+  "dependencies": {
+    "apollo-server-express": "^1.0.2",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "concurrently": "^3.5.0",
+    "express": "^4.13.4",
+    "graphql-tools": "^1.0.0",
+    "lodash": "^4.17.4",
+    "npm-run-script": "0.0.4",
+    "pg": "^6.4.1",
+    "pg-hstore": "^2.3.2",
+    "pg-promise": "^6.3.7",
+    "postgraphql": "^4.0.0-alpha1.4",
+    "prop-types": "^15.5.10",
+    "react-apollo": "^1.4.8",
+    "react-redux": "^5.0.5",
+    "sequelize": "^4.4.2",
+    "tedious": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.5.1",
+    "babel-core": "^6.5.2",
+    "babel-eslint": "^6.0.0-beta.6",
+    "babel-polyfill": "6.5.0",
+    "babel-preset-es2015": "6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "6.5.0",
+    "casual": "^1.5.14",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-config-react-app": "^1.0.5",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^1.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^4.3.0",
+    "graphql": "^0.10.0",
+    "nodemon": "^1.11.0",
+    "sequelize-auto": "^0.4.28",
+    "webpack": "^1.13.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0"
+  },
+  "peerDependencies": {
+    "graphql": "^0.5.0 || ^0.6.0"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "airbnb/base",
+      "plugin:import/errors"
+    ],
+    "rules": {
+      "no-use-before-define": 0,
+      "arrow-body-style": 0,
+      "dot-notation": 0,
+      "no-console": 0
+    },
+    "env": {
+      "mocha": true
+    }
+  }
+}
