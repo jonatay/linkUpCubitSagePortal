@@ -16,21 +16,21 @@
 
 // jrt 170726 all the above is niftily replaced by postgraphql.
 // revisit when need mssql
-const path = require('path');
-const express = require('express');
+import path from 'path';
+import express from 'express';
 
-const webpack = require('webpack');
-const config = require('./webpack.config.dev');
-
-// import pggql from './data/pggql';
+import webpack from 'webpack';
+import config from './webpack.config.dev';
+import initServer from './server/index';
 
 const app = express();
 
 const compiler = webpack(config);
 
-// app.use(pggql);
+import Raven from 'raven';
+Raven.config('https://41bd8af0e8e946388f99e7d92ceb7504:42479f273925424fb77046790a52c40c@sentry.io/228199').install();
 
-import initServer from './server/index';
+
 initServer(app, (err, res) => {
 
   app.listen(3001, 'localhost', function (err) {

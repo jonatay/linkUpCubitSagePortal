@@ -3,7 +3,7 @@
  */
 import postgraphql from 'postgraphql';
 
-const pggql = postgraphql('postgres://postgres:dsa@localhost/linkup',
+const pggql = postgraphql('postgres://postgres:postgres@localhost/linkup',
   ['hr', 'gl', 'coy', 'auth', 'fleet'],
   {
     graphiql: true,
@@ -11,6 +11,7 @@ const pggql = postgraphql('postgres://postgres:dsa@localhost/linkup',
     graphiqlRoute: '/api/pgg/graphiql',
     watchPg: true,
     enableCors: true,
+    dynamicJson: true,
   }
 );
 

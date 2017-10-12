@@ -1,0 +1,16 @@
+// Can't use the nice '~react-md/src/scss/react-md' since this isn't being bundled with webpack
+@import '../node_modules/react-md/src/scss/react-md';
+
+@include host-material-icons('/fonts/material-icons');
+
+@include host-google-font('/fonts/roboto', 400);
+@include host-google-font('/fonts/roboto', 500);
+@include host-google-font('/fonts/noto-sans', 400);
+@include host-google-font('/fonts/noto-sans', 500);
+
+// Variable overrides
+
+$md-primary-color: $md-teal-500;
+$md-secondary-color: $md-purple-a-400;
+
+

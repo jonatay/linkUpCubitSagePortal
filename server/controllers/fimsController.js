@@ -1,5 +1,5 @@
-import { getNext, postBatchImport } from '../models/fims/period';
-import { insertBatch } from '../models/fims/voucher'
+import { getNext, postBatchImport } from '../models/fleet/fimsPeriod';
+import { insertBatch } from '../models/fleet/fimsVoucher'
 
 module.exports.getPeriod = (config, db, callback) => {
   getNext(config, db, (err, res) => {
