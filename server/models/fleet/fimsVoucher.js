@@ -1,7 +1,7 @@
-import Promise from 'bluebird';
+import Promise from "bluebird";
 
 const sqlSelectUnique = `
-SELECT id FROM fims.voucher WHERE
+SELECT id FROM fleet.fims_voucher WHERE
     registration=$[registration] AND
     batch=$[batch] AND
     transaction_date=$[transaction_date] AND
@@ -14,7 +14,7 @@ SELECT id FROM fims.voucher WHERE
 `;
 
 const sqlInsertVoucher = `
-INSERT INTO fims.voucher(
+INSERT INTO fleet.fims_voucher(
     cut_off_date, account_number, account_name, cost_centre, 
     cost_centre_name, registration, batch, driver, vehicle_description, 
     transaction_date, process_date, merchant_name, merchant_town, 
@@ -31,7 +31,7 @@ INSERT INTO fims.voucher(
 `;
 
 const sqlUpdateVoucher = `
-UPDATE fims.voucher
+UPDATE fleet.fims_voucher
      SET cut_off_date=$[cut_off_date], account_number=$[account_number], account_name=$[account_name], 
      cost_centre=$[cost_centre], cost_centre_name=$[cost_centre_name], registration=$[registration], 
      batch=$[batch], driver=$[driver], vehicle_description=$[vehicle_description], transaction_date=$[transaction_date], 
@@ -48,7 +48,9 @@ module.exports.insertBatch = (data, config, db, callback) => {
   //console.log(data);
   const vouchers = data.vouchers;
   const reqParam = data.reqParam;
-  console.log(`...got rows! actual:${vouchers.length} reported:${reqParam.rows} - for period ${reqParam.reqPeriod}`)
+  console.log(
+    `...got rows! actual:${vouchers.length} reported:${reqParam.rows} - for period ${reqParam.reqPeriod}`
+  );
   //console.log(data)
   let cntProccessed = 0;
   //loop through batch
@@ -60,17 +62,20 @@ module.exports.insertBatch = (data, config, db, callback) => {
       db
         .any(sqlSelectUnique, voucher)
         .then(data => {
-          if (data[0]) { //matching voucher present - UPD
+          if (data[0]) {
+            //matching voucher present - UPD
             voucher.id = data[0].id;
-            db.any(sqlUpdateVoucher, voucher)
-              .then((data) => {
+            db
+              .any(sqlUpdateVoucher, voucher)
+              .then(data => {
                 //cntUpd++;
                 //console.log(cntUpd, cntIns);
               })
               .catch(err => {
                 callback(err);
               });
-          } else { //no voucher match INSERT
+          } else {
+            //no voucher match INSERT
             db
               .any(sqlInsertVoucher, voucher)
               .then(data => {
@@ -88,8 +93,8 @@ module.exports.insertBatch = (data, config, db, callback) => {
     }
   })
     .then((ins, upd) => {
-      console.log(`..done rows! processed:${cntProccessed}`)
-      callback(null, { status: 'ok', cntProccessed: cntProccessed });
+      console.log(`..done rows! processed:${cntProccessed}`);
+      callback(null, { status: "ok", cntProccessed: cntProccessed });
     })
     .catch(err => {
       callback(err);

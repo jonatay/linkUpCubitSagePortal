@@ -1,30 +1,30 @@
 const sqlGetAvailablePeriod = `
-SELECT year, month FROM fims.period 
+SELECT year, month FROM fleet.fims_period 
   WHERE (when_received is null OR must_refresh) 
   ORDER BY year,month 
   LIMIT 1
 `;
 
 const sqlGetLastPeriod = `
-SELECT year, month FROM fims.period 
+SELECT year, month FROM fleet.fims_period 
   ORDER BY year DESC,month DESC
   LIMIT 1
 `;
 
 const sqlGetUniqueByPeriod = `
-SELECT id FROM fims.period 
+SELECT id FROM fleet.fims_period 
 WHERE year=$[year] AND month=$[month]
 `;
 
 const sqlInsert = `
-INSERT INTO fims.period(
+INSERT INTO fleet.fims_period(
     year, month, when_received, rows_received, account, must_refresh)
   VALUES 
     ($[year], $[month], $[when_received], $[rows_received], $[account], $[must_refresh]);
 `;
 
 const sqlUpdate = `
-UPDATE fims.period
+UPDATE fleet.fims_period
   SET 
     year=$[year], month=$[month], 
     when_received=$[when_received], 
@@ -44,7 +44,7 @@ const getNextDate = myDate => {
   let mthRet = myDate.month < 12 ? myDate.month + 1 : 1;
   //console.log(yrRet, yrNow, mthRet, mthNow)
   if (yrNow > yrRet || (yrNow = yrRet && mthNow > mthRet)) {
-    return { year: yrRet, month: (mthRet < 10) ? '0' + mthRet : '' + mthRet };
+    return { year: yrRet, month: mthRet < 10 ? "0" + mthRet : "" + mthRet };
   } else return { sinceLastCutoff: true };
 };
 
@@ -59,7 +59,9 @@ module.exports.getNext = (config, db, callback) => {
         db
           .any(sqlGetLastPeriod) // get last period in table
           .then(data => {
-            let nxtPer = data[0] ? getNextDate(data[0]) : { year: 2015, month: '08' };
+            let nxtPer = data[0]
+              ? getNextDate(data[0])
+              : { year: 2015, month: "08" };
             console.log(`..returning period ${nxtPer.year}-${nxtPer.month}`);
             callback(null, nxtPer);
           })
@@ -77,19 +79,17 @@ module.exports.postBatchImport = (data, config, db, callback) => {
     when_received: new Date(),
     rows_received: data.reqParam.rows,
     account: data.reqParam.account,
-    must_refresh : false
-  }
+    must_refresh: false
+  };
   console.log(period);
-  db.any(sqlGetUniqueByPeriod, period)
-    .then(data => {
-      console.log(data);
-      if (data[0]) {
-        console.log(data[0])
-      } else {
-        db.any(sqlInsert, period)
-          .then(data => {
-            callback(null, { status: 'ok' });
-          })
-      }
-    });
+  db.any(sqlGetUniqueByPeriod, period).then(data => {
+    console.log(data);
+    if (data[0]) {
+      console.log(data[0]);
+    } else {
+      db.any(sqlInsert, period).then(data => {
+        callback(null, { status: "ok" });
+      });
+    }
+  });
 };
